@@ -13,19 +13,64 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{23f874ca-5a9e-4c52-a07c-a8a71bde730f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{ec53ebaf-0dc7-4228-8b64-c371619134ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework">
+      <UniqueIdentifier>{060f3e37-1356-434b-b2d4-62b35897070a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{9debac5d-a333-4b6b-bd2b-35684a8d5bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Input Framework">
+      <UniqueIdentifier>{6b0a01ef-b58f-4d75-8d1c-95632bb5c01e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Draw Framework">
+      <UniqueIdentifier>{d12d7f90-9570-4231-9f72-630c9eb0aa39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Draw Framework\Draw Framework Includes">
+      <UniqueIdentifier>{78b03414-a703-4220-a2bf-6b645dd7d027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Input FrameWork">
+      <UniqueIdentifier>{454e1d95-8d25-414c-8615-901d8932209d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Draw Framework">
+      <UniqueIdentifier>{60f92293-de18-4837-9bed-2a532e988a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Framework\Draw Framework\Draw Framework Includes">
+      <UniqueIdentifier>{bef30e33-666e-4de5-aefe-21c869f8d16f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GameEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\stdafx.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\gl_core_4_3.cpp">
+      <Filter>Source Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\glslprogram.cpp">
+      <Filter>Source Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\glutils.cpp">
+      <Filter>Source Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\QuatCamera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DrawFramework.cpp">
+      <Filter>Source Files\Framework\Draw Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +78,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\gl_core_4_3.hpp">
+      <Filter>Header Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\glslprogram.h">
+      <Filter>Header Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\glutils.h">
+      <Filter>Header Files\Framework\Draw Framework\Draw Framework Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\drawframeworks.h">
+      <Filter>Header Files\Framework\Draw Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\QuatCamera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\gamescene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

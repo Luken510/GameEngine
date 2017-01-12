@@ -77,8 +77,8 @@
     <OutDir>$(SolutionDir)$(Platform)\bin\Debug\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
     <ExecutablePath>$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>$(SolutionDir)\GameEngine\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(SolutionDir)\GameEngine\src;$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,8 +88,8 @@
     <OutDir>$(SolutionDir)$(Platform)\bin\Release\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
     <ExecutablePath>$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
-    <IncludePath>$(SolutionDir)\GameEngine\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <SourcePath>$(SolutionDir)\GameEngine\src;$(VC_SourcePath);</SourcePath>
+    <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -111,7 +111,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\CubeMap\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,7 +146,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\CubeMap\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,11 +161,23 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\DrawFramework.cpp" />
     <ClCompile Include="..\src\GameEngine.cpp" />
-    <ClCompile Include="..\src\Renderer.cpp" />
+    <ClCompile Include="..\src\GameScene.cpp" />
+    <ClCompile Include="..\src\glslprogram.cpp" />
+    <ClCompile Include="..\src\glutils.cpp" />
+    <ClCompile Include="..\src\gl_core_4_3.cpp" />
+    <ClCompile Include="..\src\QuatCamera.cpp" />
     <ClCompile Include="..\src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\drawframeworks.h" />
+    <ClInclude Include="..\include\gamescene.h" />
+    <ClInclude Include="..\include\glslprogram.h" />
+    <ClInclude Include="..\include\glutils.h" />
+    <ClInclude Include="..\include\gl_core_4_3.hpp" />
+    <ClInclude Include="..\include\QuatCamera.h" />
+    <ClInclude Include="..\include\scene.h" />
     <ClInclude Include="..\include\stdafx.h" />
     <ClInclude Include="..\include\targetver.h" />
   </ItemGroup>

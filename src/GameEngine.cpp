@@ -1,4 +1,4 @@
-// CubeMap.cpp : Defines the entry point for the console application.
+// GameEngine.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -11,12 +11,8 @@
 
 #include "scene.h"
 
-#include "CubeMapScene.h"
-
-
-//#include <string>
-//using std::cout;
-
+#include <string>
+using namespace std;
 
 #include "QuatCamera.h"
 
@@ -26,8 +22,11 @@
 #define MOVE_VELOCITY 0.01f
 #define ROTATE_VELOCITY 0.001f
 
-using namespace imat3111;
-
+using namespace Camera;
+//prog.use()
+//do the matrix then render
+//use obj loader
+//mat4 for moving robot, with cos things?
 //The GLFW Window
 GLFWwindow *window;
 
@@ -35,7 +34,8 @@ GLFWwindow *window;
 Scene *scene;
 
 //The camera
-QuatCamera camera;
+QuatCamera *camera1;
+QuatCamera *camera2;
 
 //To keep track of cursor location
 double lastCursorPositionX, lastCursorPositionY, cursorPositionX, cursorPositionY;
@@ -50,7 +50,7 @@ static void key_callback(GLFWwindow* window, int key, int cancode, int action, i
 		if (scene)
 			scene->animate(!(scene->animating()));
 	if (key == 'R' && action == GLFW_RELEASE)
-		camera.reset();
+		camera1->reset();
 	if (key == 'T' && action == GLFW_RELEASE)
 		scene->toggleRs();
 
@@ -61,7 +61,7 @@ static void key_callback(GLFWwindow* window, int key, int cancode, int action, i
 /////////////////////////////////////////////////////////////////////////////////////////////
 void scroll_callback(GLFWwindow *window, double x, double y)
 {
-	camera.zoom((float)y*0.5f);
+	camera1->zoom((float)y*0.5f);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,8 +79,8 @@ void initializeGL() {
 
 
 	// Create the scene class and initialise it for the camera
-	scene = new CubeMapScene();
-	scene->initScene(camera);
+	scene = new GameScene();
+	scene->initScene(*camera1);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ void update(float t)
 
 		//	std::cout <<"deltaX " << deltaX << " deltaY " << deltaY << "\n";
 
-		camera.rotate(deltaX*ROTATE_VELOCITY, deltaY*ROTATE_VELOCITY);
+		camera1->rotate(deltaX*ROTATE_VELOCITY, deltaY*ROTATE_VELOCITY);
 
 	}
 
@@ -113,14 +113,14 @@ void update(float t)
 	{
 		//std::cout << "Right button \n";
 		//Rotate the camera. The 0.01f is a velocity mofifier to make the speed sensible
-		camera.pan(deltaX*MOVE_VELOCITY, deltaY*MOVE_VELOCITY);
+		camera1->pan(deltaX*MOVE_VELOCITY, deltaY*MOVE_VELOCITY);
 
 	}
 	//To adjust Roll with MIDDLE mouse button
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE))
 	{
 
-		camera.roll(deltaX*ROTATE_VELOCITY);
+		camera1->roll(deltaX*ROTATE_VELOCITY);
 
 	}
 
@@ -136,9 +136,17 @@ void update(float t)
 /////////////////////////////////////////////////////////////////////////////////////////////
 void mainLoop() {
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE)) {
-		//GLUtils::checkForOpenGLError(__FILE__,__LINE__);
+		
 		update((float)glfwGetTime());
-		scene->render(camera);
+
+		scene->render(*camera1);
+
+		//is running;
+		//GUI->update
+		//Render->draw
+
+
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
@@ -147,7 +155,7 @@ void mainLoop() {
 /////////////////////////////////////////////////////////////////////////////////////////////
 // resize
 /////////////////////////////////////////////////////////////////////////////////////////////
-void resizeGL(QuatCamera camera, int w, int h) {
+void resizeGL(QuatCamera &camera, int w, int h) {
 	scene->resize(camera, w, h);
 }
 
@@ -203,7 +211,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	// Initialization
 	initializeGL();
 
-	resizeGL(camera, WIN_WIDTH, WIN_HEIGHT);
+	resizeGL(*camera1, WIN_WIDTH, WIN_HEIGHT);
 
 
 	// Enter the main loop
