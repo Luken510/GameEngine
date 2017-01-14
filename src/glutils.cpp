@@ -1,4 +1,4 @@
-
+#include "stdafx.h"
 #include "glutils.h"
 #include "gl_core_4_3.hpp"
 

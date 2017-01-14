@@ -72,6 +72,9 @@
     <ClCompile Include="..\src\DrawFramework.cpp">
       <Filter>Source Files\Framework\Draw Framework</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.h">
@@ -101,5 +104,22 @@
     <ClInclude Include="..\include\gamescene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\diffuse.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\diffuse.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

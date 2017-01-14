@@ -2,6 +2,7 @@
 #ifndef QUATCAMERA_H
 #define QUATCAMERA_H
 
+#define _USE_MATH_DEFINES
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -43,6 +44,12 @@ public:
 	glm::mat4 view(); //Get the View matrix
 
 	glm::mat4 projection(); //Get the Projection matrix
+	
+	int iCurrentCamera;
+
+	void toggleCamera(int x);
+
+	int getCurrentCam();
 	
 
 private:

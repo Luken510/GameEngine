@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 #include "QuatCamera.h"
 
-namespace Camera
+namespace SetUp
 {
 
 class Scene
@@ -17,7 +17,7 @@ public:
     /**
       Load textures, initialize shaders, etc.
       */
-    virtual void initScene(QuatCamera &camera) = 0;
+    virtual void initScene(Camera::QuatCamera &camera) = 0;
 
     /**
       This is called prior to every frame.  Use this
@@ -28,14 +28,13 @@ public:
     /**
       Draw your scene.
       */
-    virtual void render(QuatCamera &camera) = 0;
+    virtual void render(Camera::QuatCamera &camera) = 0;
 
     /**
       Called when screen is resized
       */
-    virtual void resize(QuatCamera &camera,int, int) = 0;
+    virtual void resize(Camera::QuatCamera &camera,int, int) = 0;
     
-	virtual void toggleRs() = 0;
     void animate( bool value ) { m_animate = value; }
     bool animating() { return m_animate; }
     

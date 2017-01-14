@@ -1,11 +1,7 @@
-#define _USE_MATH_DEFINES
+#include "stdafx.h"
 #include <cmath>
-
-
 #include "QuatCamera.h"
-
 #include "defines.h"
-
 #include <iostream>
 using namespace Camera;
 
@@ -22,6 +18,7 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 	QuatCamera::QuatCamera() 
 	{
 		reset();
+		int iCurrentCamera = 1;
 	}
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +136,11 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 		glm::normalize(qOutput);
 
 		_orientation = qOutput;
+
+		if (iCurrentCamera == 1)
+			std::cout << ":)";
+		else
+			std::cout << "ayyyyy";
 
 		updateView();
 
@@ -260,4 +262,20 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 		
 	}
 
-	
+	void QuatCamera::toggleCamera(int x)
+	{
+		if (x == 1)
+		{
+			iCurrentCamera = 1;
+		}
+		else if (x == 2)
+		{
+			iCurrentCamera = 2;
+		}
+			
+	}
+
+	int QuatCamera::getCurrentCam()
+	{
+		return iCurrentCamera;
+	}

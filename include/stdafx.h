@@ -13,3 +13,11 @@
 
 
 // TODO: reference additional headers your program requires here
+#include "drawframeworks.h"
+#include "defines.h"
+#include "gamescene.h"
+#include "gl_core_4_3.hpp"
+#include "glslprogram.h"
+#include "glutils.h"
+#include "QuatCamera.h"
+#include "scene.h"

@@ -7,7 +7,6 @@
 #pragma warning( disable : 4290 )
 #endif
 
-
 #include "gl_core_4_3.hpp"
 
 #include <glm/glm.hpp>

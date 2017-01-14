@@ -3,18 +3,13 @@
 #define GAMESCENE_H
 
 #include "scene.h"
-
-#include "gl_core_4_3.hpp"
-#include <GLFW/glfw3.h>
-#include "glutils.h"
-#include "scene.h"
-#include "glslprogram.h"
 #include <glm/glm.hpp>
 #include "drawframeworks.h"
 
-using namespace Camera;
+using namespace SetUp;
+using namespace DrawFrame;
 
-namespace GameScene
+namespace Game
 {
 	class GameScene : public Scene
 	{
@@ -28,30 +23,28 @@ namespace GameScene
 		//Table?s
 		//Teapot?
 
-	//	DrawFrame::DrawFrameWork DrawFrameTest;
+		DrawFrameWork DrawClass;
+
 
 		glm::mat4 model; // for mvp
 
-		void setMatrices(QuatCamera & camera); // set the matricies for the camera
-
-		void compileAndLinkShader(); //Compile and link the shader
+		void setMatrices(Camera::QuatCamera &camera); // set the matricies for the camera
 
 		bool m_Toggle;
 
 	public:
 		GameScene(); // Constructor
 
-		void setLightParams(QuatCamera & camera); //Setup the lighting
+		void setLightParams(Camera::QuatCamera &camera); //Setup the lighting
 
-		void initScene(QuatCamera & camera); //Initialise the scene
+		void initScene(Camera::QuatCamera &camera); //Initialise the scene
 
 		void update(float t); //Update the scene
 
-		void render(QuatCamera & camera);	//Render the scene
+		void render(Camera::QuatCamera &camera);	//Render the scene
 
-		void resize(QuatCamera & camera, int, int); //Resize
+		void resize(Camera::QuatCamera &camera, int, int); //Resize
 
-		void toggleRs();
 
 	};
 }

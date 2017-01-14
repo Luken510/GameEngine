@@ -1,16 +1,17 @@
+#include "stdafx.h"
 #include "drawframeworks.h"
 
 
-namespace DrawFrame
-{
+using namespace DrawFrame;
+
 
 	DrawFrameWork::DrawFrameWork()
 	{
 	}
 
 	// to use a basic framework to assign the VBOs instead of the object doing it.
-		void DrawFrameWork::setVBOs(float fvData[], float fnData[], float ftData[],
-		float size, unsigned int handle[], int indicies[], unsigned int IndiciesSize)
+		void DrawFrameWork::setVBOs(GLfloat fvData[], GLfloat fnData[], GLfloat ftData[],
+		GLuint size, GLuint handle[], GLfloat indicies[], GLuint IndiciesSize)
 	{
 
 		gl::GenVertexArrays(1, &vaoHandle);
@@ -36,8 +37,8 @@ namespace DrawFrame
 
 	}
 	// without indicies
-		void DrawFrameWork::setVBOs(float fvData[], float fnData[], float ftData[],
-		float size, unsigned int handle[])
+		void DrawFrameWork::setVBOs(GLfloat fvData[], GLfloat fnData[], GLfloat ftData[],
+			GLuint size, GLuint handle[])
 	{
 
 		gl::GenVertexArrays(1, &vaoHandle);
@@ -62,7 +63,7 @@ namespace DrawFrame
 	}
 
 
-		void DrawFrameWork::render(unsigned int VAO, unsigned int DrawCount, bool indicies)
+		void DrawFrameWork::render(GLuint VAO, GLuint DrawCount, bool indicies)
 	{
 
 			gl::Clear(gl::COLOR_BUFFER_BIT);
@@ -96,17 +97,15 @@ namespace DrawFrame
 		}
 	}
 
-	 void DrawFrameWork::setLightParams(vec3 CamPos, vec3 WorldLight)
+	 void DrawFrameWork::setLightParams(vec3 CamPos, vec3 WorldLight,
+		 float AmbIntensity, float DiffIntensity, float SpecularIntensity)
 	 {
 
-
-		 vec3 worldLight = WorldLight;
-
-		 prog.setUniform("Ld", 1.0f, 1.0f, 1.0f); // diffuse light intentsity
-		 prog.setUniform("La", 0.5f, 0.5f, 0.5f); // ambient light intentsity
-		 prog.setUniform("n", 30.f); // specular exponent
+		 prog.setUniform("Ld", DiffIntensity, DiffIntensity, DiffIntensity); // diffuse light intentsity
+		 prog.setUniform("La", AmbIntensity, AmbIntensity, AmbIntensity); // ambient light intentsity
+		 prog.setUniform("n", SpecularIntensity); // specular exponent
 		 prog.setUniform("Al", 0.0001f); // light attenuation		
-		 prog.setUniform("LightPosition", worldLight);
+		 prog.setUniform("LightPosition", WorldLight);
 		 prog.setUniform(("CameraPos"), CamPos);
 
 	 }
@@ -115,4 +114,31 @@ namespace DrawFrame
 	 {
 		 gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
 	 }
-}
+
+	 void DrawFrameWork::setReflectivity(vec3 ambientReflect, vec3 diffuseReflect, vec3 specularReflect)
+	 {
+		 prog.setUniform("Kd", diffuseReflect); // diffuse light
+		 prog.setUniform("Ka", ambientReflect); // ambient light
+		 prog.setUniform("Ks", specularReflect); // specular light
+
+	 }
+
+	 void DrawFrameWork::setMatricies(glm::mat3 NormalMatrix, glm::mat4 model, glm::mat4 view, glm::mat4 proj)
+	 {
+		
+		 prog.setUniform("NormalMatrix", NormalMatrix);
+		 prog.setUniform("M", model);
+		 prog.setUniform("V", view);
+		 prog.setUniform("P", proj);
+
+	 }
+
+	 void DrawFrameWork::setViewPort(GLint x, GLint y, GLint width, GLint height)
+	 {
+		 gl::Viewport(x, y, width, height);
+	 }
+
+	 DrawFrameWork::~DrawFrameWork()
+	 {
+		 // TO DO : Implement this to destroy all Vbos and Vaos
+	 }

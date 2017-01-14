@@ -1,6 +1,6 @@
 
 #include "GameScene.h"
-
+#include "stdafx.h"
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
@@ -11,15 +11,13 @@ using std::endl;
 
 //using glm::vec3;
 
-using namespace DrawFrame;
-
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform2.hpp>
 
 
-namespace GameScene
-{
+using namespace Game;
+
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Default constructor
 	/////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,15 +28,15 @@ namespace GameScene
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//Initialise the scene
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::initScene(QuatCamera & camera)
+	void GameScene::initScene(Camera::QuatCamera &camera)
 	{
 		//|Compile and link the shader  
-		DrawFrameWork::CompileAndLinkShader();
+		DrawClass.CompileAndLinkShader();
 
-		DrawFrameWork::EnableDepth();
+		DrawClass.EnableDepth();
 
 		//Set up the lighting
-		DrawFrameWork::setLightParams(camera.position());
+		setLightParams(camera);
 
 
 		//Create the plane to represent the ground
@@ -59,73 +57,58 @@ namespace GameScene
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Set up the lighting variables in the shader
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::setLightParams(QuatCamera & camera)
+	void GameScene::setLightParams(Camera::QuatCamera &camera)
 	{
 		vec3 WorldLightPos = vec3(10.0f, 10.0f, 10.0f);
-		DrawFrameWork::setLightParams(camera.position(), WorldLightPos);
+		DrawClass.setLightParams(camera.position(), WorldLightPos, 0.5f, 1.0f, 30.0f);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Render the scene
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::render(QuatCamera & camera)
+	void GameScene::render(Camera::QuatCamera &camera)
 	{
 		//OpenGL Clear ColourBits and Depth bits before rendering scene
-		DrawFrameWork::clearBits();
+		DrawClass.clearBits();
 
 
 		//Now set up the teapot 
 		model = mat4(1.0f);
 		setMatrices(camera);
-		//Set the Teapot material properties in the shader and render
-		prog.setUniform("Kd", 0.9f, 0.5f, 0.3f); // diffuse light
-		prog.setUniform("Ka", 0.2f, 0.2f, 0.2f); // ambient light
-		prog.setUniform("Ks", 0.9f, 0.5f, 0.3f); // specular light
 
+		
 	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//Send the MVP matrices to the GPU
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::setMatrices(QuatCamera & camera)
+	void GameScene::setMatrices(Camera::QuatCamera &camera)
 	{
-		mat4 mv = camera.view() * model;
+		mat4 mv = (camera.view()) * model;
 
-		//Negate translate of camera view for skybox
-		mat4 TempView = camera.view();
-		TempView[3][0] = 0.0f;
-		TempView[3][1] = 0.0f;
-		TempView[3][2] = 0.0f;
-		mv = TempView * model;
+	//Negate Translate for camera view
+		mat4 mTempView = camera.view();
+		mTempView[3][0] = 0.0f;
+		mTempView[3][1] = 0.0f;
+		mTempView[3][2] = 0.0f;
+		mv = mTempView * model;
 
+		mat3 mNormal = mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2]) );
 
-		prog.setUniform("ModelViewMatrix", mv);
-		prog.setUniform("NormalMatrix",
-			mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2])));
-		prog.setUniform("MVP", camera.projection() * mv);
-		// the correct matrix to transform the normal is the transpose of the inverse of the M matrix
-		mat3 normMat = glm::transpose(glm::inverse(mat3(model)));
-		prog.setUniform("M", model);
-		//prog.setUniform("NormalMatrix", normMat);
-		prog.setUniform("V", camera.view());
-		prog.setUniform("P", camera.projection());
+		DrawClass.setMatricies(mNormal, model, camera.view(), camera.projection());
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// resize the viewport
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::resize(QuatCamera & camera, int w, int h)
+	void GameScene::resize(Camera::QuatCamera &camera, int w, int h)
 	{
-		gl::Viewport(0, 0, w, h);
-		width = w;
-		height = h;
+		DrawClass.setViewPort(0, 0, w, h);
+		m_iWidth = w;
+		m_iHeight = h;
 		camera.setAspectRatio((float)w / h);
 
 	}
 
-	void GameScene::toggleRs()
-	{
-		m_Toggle = !m_Toggle;
-	}
-}

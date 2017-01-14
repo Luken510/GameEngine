@@ -116,8 +116,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc110-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -161,6 +161,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Cube.cpp" />
     <ClCompile Include="..\src\DrawFramework.cpp" />
     <ClCompile Include="..\src\GameEngine.cpp" />
     <ClCompile Include="..\src\GameScene.cpp" />
@@ -168,9 +169,14 @@
     <ClCompile Include="..\src\glutils.cpp" />
     <ClCompile Include="..\src\gl_core_4_3.cpp" />
     <ClCompile Include="..\src\QuatCamera.cpp" />
-    <ClCompile Include="..\src\stdafx.cpp" />
+    <ClCompile Include="..\src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\cube.h" />
+    <ClInclude Include="..\include\defines.h" />
     <ClInclude Include="..\include\drawframeworks.h" />
     <ClInclude Include="..\include\gamescene.h" />
     <ClInclude Include="..\include\glslprogram.h" />
@@ -180,6 +186,11 @@
     <ClInclude Include="..\include\scene.h" />
     <ClInclude Include="..\include\stdafx.h" />
     <ClInclude Include="..\include\targetver.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\diffuse.frag" />
+    <None Include="Shaders\diffuse.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
