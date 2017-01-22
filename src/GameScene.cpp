@@ -42,8 +42,12 @@ using namespace ecr;
 		ShadingRobot = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Robot");
 		ShadingObject = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Objects");
 
+		theHouse = new Model("../assets/house/house.FBX");
+
 		//Create the objects
-		theTest = new Model("../assets/nanosuit/nanosuit.obj");
+		theSpookyGuy = new Model("../assets/nanosuit/nanosuit.obj");
+
+
 
 		//Create the robot
 		theRobot = new Robot;
@@ -96,10 +100,17 @@ using namespace ecr;
 
 		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
 		// Draw the loaded model
-		model = mat4(1.0f);
+		model = mat4(1.0f) * glm::translate(vec3(5.0f, -5.0f, 5.0f));
 		setMatrices(camera);
-		theTest->Render(&myGLSL_prog);
+		theSpookyGuy->Render(&myGLSL_prog);
 
+		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
+		// Draw the loaded model
+		model = mat4(1.0f) * glm::translate(vec3(50.0f,-5.0f,50.0f)) * glm::scale (vec3(0.8f,0.8f,0.8f));
+		setMatrices(camera);
+		theHouse->Render(&myGLSL_prog);
+
+		
 		
 	}
 
@@ -107,6 +118,7 @@ using namespace ecr;
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//Send the MVP matrices to the GPU
 	/////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void GameScene::setMatrices(ecr::QuatCamera &camera)
 	{
 		mat4 mv = (camera.view()) * model;

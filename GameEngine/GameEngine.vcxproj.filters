@@ -43,6 +43,9 @@
     <Filter Include="Source Files\Input Framework">
       <UniqueIdentifier>{6b0a01ef-b58f-4d75-8d1c-95632bb5c01e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Framework\Engine Framework">
+      <UniqueIdentifier>{0a752767-b004-453f-8920-3eef97a4291e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -125,18 +128,21 @@
     <ClInclude Include="..\include\modelLoader.h">
       <Filter>Header Files\Framework\Draw Framework</Filter>
     </ClInclude>
+    <ClInclude Include="inputs.h">
+      <Filter>Header Files\Framework\Input FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFrameWork.h">
+      <Filter>Header Files\Framework\Engine Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\mainLoop.h">
+      <Filter>Header Files\Framework\Engine Framework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\diffuse.frag">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Shaders\diffuse.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Shaders\test.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Shaders\test.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

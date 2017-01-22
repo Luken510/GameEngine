@@ -18,7 +18,6 @@
 #include "glutils.h"
 #include <ostream>
 #include <iostream>
-#include "SOIL\SOIL.h"
 #include "defines.h"
 #include "gamescene.h"
 #include "QuatCamera.h"

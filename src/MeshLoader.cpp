@@ -46,7 +46,9 @@ void Mesh::Render(GLSLProgram* shader)
 	GLuint iDiffuseNr = 1;
 	GLuint iSpecularNr = 1;
 	
-	for (GLuint i = 0; 1 < (this->mv_Textures.size() - 1); i++)
+	cout << this->mv_Textures.size() << endl;
+
+	for (GLuint i = 0; i < (this->mv_Textures.size()); i++)
 	{
 		gl::ActiveTexture(gl::TEXTURE0 + i); // activating the proper texture unit before binding the data
 

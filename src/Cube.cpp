@@ -148,10 +148,14 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 
 	std::cout << vposition.x << " " << vposition.y << " " << vposition.x << std::endl;
 	mat4 TempTranslate = glm::translate(-robotpos);
-	mat4 TempRotate = glm::rotate(glm::radians(frotateangle), vec3(0.0f, 1.0f, 0.0f));
+	mat4 TempRotate = glm::rotate(glm::radians(frotateangle/10), vec3(0.0f, 1.0f, 0.0f));
+	anitmationRotate = glm::rotate(glm::radians(fnewAngle), vec3(1.0f, 0.0f, 0.0f));
 	mat4 TempTransform = TempRotate * TempTranslate;
 	if (!fnewAngle == 0)
-	anitmationRotate = glm::rotate(glm::radians(fnewAngle), vec3(1.0f, 0.0f, 0.0f));
+		mat4 TempTransform = anitmationRotate * TempRotate * TempTranslate;
+	else
+		mat4 TempTransform = TempRotate * TempTranslate;
+	
 
 
 	int y = 108; // number of vertices				   
@@ -168,7 +172,7 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		tempnorm = TempTransform * tempnorm;
 		m_vVertexNormal[(i)] = tempnorm.x;
 		m_vVertexNormal[(i + 1)] = tempnorm.y;	
-		m_vVertexNormal[(i + 2)] = tempnorm.z;
+		m_vVertexNormal[(i + 2)] = tempnorm.z;  // have to set the robot to the origin, rotate then move back
 	}
 
 	vec3 vBackToNewPos = robotpos + vposition;
@@ -192,20 +196,6 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		m_vVertexNormal[(i + 2)] = tempnorm2.z;
 	}
 
-	/*for (int i = 0; i < y; i += 3)
-	{
-		vec4 tempv2 = vec4(m_vPosition[i], m_vPosition[i + 1], m_vPosition[i + 2], 1.0f);
-		tempv2 = anitmationRotate * tempv2;
-		m_vPosition[(i)] = tempv2.x;
-		m_vPosition[(i + 1)] = tempv2.y;
-		m_vPosition[(i + 2)] = tempv2.z;
-
-		vec4 tempnorm2 = vec4(m_vVertexNormal[(i)], m_vVertexNormal[(i + 2)], m_vVertexNormal[(i + 3)], 1.0f);
-		tempnorm2 = anitmationRotate * tempnorm2;
-		m_vVertexNormal[(i)] = tempnorm2.x;
-		m_vVertexNormal[(i + 1)] = tempnorm2.y;
-		m_vVertexNormal[(i + 2)] = tempnorm2.z;
-	}*/
 
 	gl::GenVertexArrays(1, &m_vaoHandle);
 	gl::BindVertexArray(m_vaoHandle);

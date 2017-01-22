@@ -11,6 +11,7 @@
 
 #include "glslprogram.h"
 #include "meshLoader.h"
+#include "SOIL2\SOIL2.h"
 
 
 

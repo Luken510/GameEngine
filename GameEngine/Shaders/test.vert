@@ -1,32 +1,16 @@
 #version 430
-
-layout (location = 0) in vec3 VertexPosition;
-layout (location = 1) in vec3 VertexNormal;
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 texCoords;
 
-out vec3 vertPos; //Vertex position in eye coords
-out vec3 N; //Transformed normal
-out vec3 lightPos; //Light position in eye coords
-out vec2 TexCoords; // texture co-ords for assimp object loader
+out vec2 TexCoords;
 
-
-
-uniform vec3 LightPosition; // Light position 
-uniform mat3 NormalMatrix;
-uniform mat4 M;
-uniform mat4 V;
-uniform mat4 P;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-	
-	TexCoords = texCoords;
-	
-   vertPos = vec3(V * M * vec4(VertexPosition,1.0)); 
-     
-   lightPos = vec3(V * M * vec4(LightPosition,1.0));  
-
-   N = normalize( NormalMatrix * VertexNormal);
-      
-   gl_Position = gl_Position = P * V * M * vec4(VertexPosition,1.0);
+    gl_Position = projection * view * model * vec4(position, 1.0f);
+    TexCoords = texCoords;
 }

@@ -29,7 +29,8 @@ namespace ecr
 		GLSLProgram myGLSL_prog;
 
 		Robot* theRobot;
-		Model* theTest;
+		Model* theSpookyGuy;
+		Model* theHouse;
 		
 		void compileAndLinkShader();
 

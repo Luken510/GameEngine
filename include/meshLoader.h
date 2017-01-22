@@ -11,13 +11,15 @@ using namespace std;
 
 
 
-	struct Vertex {
+struct Vertex 
+	{
 		glm::vec3 m_vPosition;
 		glm::vec3 m_vNormal;
 		glm::vec2 m_vTexCoords;
 	};
 
-	struct Texture {
+struct Texture 
+	{
 		GLuint m_id;
 		string sType;
 		aiString sPath;

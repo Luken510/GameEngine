@@ -69,21 +69,26 @@ void Robot::Update(float dt)
 		if (fDirection == MOVELEFT)
 		{
 			bIsRotating = TRUE;
-			if (fRotationAngle > (360))
+			fRotationAngle += glm::radians(30.0f);
+
+			if (fRotationAngle > (2 * M_PI))
 			{
-				fRotationAngle = (360);
+				fRotationAngle = (2 * M_PI);
 			}
-			fRotationAngle += 0.5f;
+			
 		
 		}
 		else if (fDirection == MOVERIGHT)
 		{
 			bIsRotating = TRUE;
-			if (fRotationAngle < -(360))
+
+			fRotationAngle -= glm::radians(30.0f);
+
+			if (fRotationAngle < -(2 * M_PI))
 			{
-				fRotationAngle = -(360);
+				fRotationAngle = -(2* M_PI);
 			}
-			fRotationAngle -= 0.5f;
+			
 		}
 
 		 oldposition = m_Position;
@@ -92,14 +97,14 @@ void Robot::Update(float dt)
 		{
 		case MOVEFOWARD:
 			bIsRotating = FALSE;
-			m_Position.x -= sin(((M_PI / 180) * fRotationAngle));
-			m_Position.z -= cos(((M_PI / 180) * fRotationAngle));
+			m_Position.x -= sin(( fRotationAngle)/10);
+			m_Position.z -= cos((fRotationAngle)/10);
 			 newPosition = m_Position - oldposition;
 			break;
 		case MOVEBACKWARD:
 			bIsRotating = FALSE;
-			m_Position.x += sin(((M_PI / 180) * fRotationAngle));
-			m_Position.z += cos(((M_PI / 180) * fRotationAngle));
+			m_Position.x += sin(( fRotationAngle) /10);
+			m_Position.z += cos((  fRotationAngle) /10);
 			newPosition = m_Position - oldposition;
 			break;
 		default:
@@ -112,9 +117,9 @@ void Robot::Update(float dt)
 			{
 				// arms
 				if (armStates[side] == FORWARD_STATE)
-					armAngles[side] += animationspeed * 0.05f * dt;
+					armAngles[side] += animationspeed * 0.0005f * dt;
 				else
-					armAngles[side] -= animationspeed * 0.05f * dt;
+					armAngles[side] -= animationspeed * 0.0005f * dt;
 
 				// change state if exceeding angles
 				if (armAngles[side] >= glm::radians(15.0f))
