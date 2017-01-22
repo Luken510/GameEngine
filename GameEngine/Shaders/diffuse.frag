@@ -3,65 +3,77 @@
 subroutine vec4 shaderModelType();
 subroutine uniform shaderModelType shaderModel;
 
+in vec3 vertPos;
+in vec3 N;
+in vec3 lightPos;
+in vec2 TexCoords;
 
-in vec3 vertPos;		// world position
-in vec3 N;				// surface normal
-in vec3 lightPos;		// position of the light
-in vec3 texCoords;		//Texture co-ords 
-in vec3 eyePos;			// position of eyes
-in vec3 eyeNormal;		// normal of eyes
-
-uniform samplerCube BoxTexture;		//Box map sampler
-uniform mat4 View;					//View matrix
-
-//phong
-uniform vec3 Kd;				// Diffuse reflectivity
-uniform vec3 Ka;				// Ambient reflectivity
-uniform vec3 Ks;				// Specular reflectivity
-
-uniform vec3 Ld;				// Diffuse light intensity
-uniform vec3 La;				// Ambient light intensity
-
-uniform float n;				// Specular reflection exponent
-
-uniform vec3 cameraPos;
+struct Material
+{
+        sampler2D texture_diffuse1;
+        sampler2D texture_specular1;
+};
 
 
-layout( location = 0 ) out vec4 FragColour; // output
+uniform vec3 Kd;            // Diffuse reflectivity
+uniform vec3 Ld;            // Diffuse light intensity
+uniform vec3 Ka;            // abient reflectivity
+uniform vec3 La;			// abient light intensity
+uniform vec3 Ks;			// Specular reflection
+uniform float n;			// specular reflection exponent
+uniform float Al;			// light attenuation
+uniform Material mats;
+
+uniform sampler2D texture_diffuse1; // for the textures
+
+
+
+layout( location = 0 ) out vec4 FragColour;
 
 void main() {
 
-  FragColour = shaderModel(); // this is how the subrountines are chosen and set
+	FragColour = shaderModel();
+
+	}		
+
+subroutine (shaderModelType)
+vec4 Robot()
+{
+   //Calculate the light vector
+   vec3 L = normalize(lightPos - vertPos);  
+   //Calculate V and R
+   vec3 V = normalize(-vertPos);
+   vec3 R = normalize(-reflect(L,N));
+    
+	//calculate ambient
+	vec4 Ia = vec4((Ka * La),1.0);
+
+
+   //calculate Diffuse Light Intensity making sure it is not negative 
+   //and is clamped 0 to 1  
+   vec4 Id = vec4(Ld,1.0) * max(dot(N,L), 0.0) * (vec4(Kd,1.0));
+   Id = clamp(Id, 0.0, 1.0);   
+    
+  
+   // calculate specular light intensity, making sure it doesnt reflect on the other side
+   vec4 Is =  vec4(Ld,1.0) * (pow ( max (dot(R, V), 0.0), n)) * (vec4(Ks, 1.0));
+   Is = clamp(Is, 0.0, 1.0);
+  
+
+   //attenuation
+    float distanceToLight = length(lightPos - vertPos);
+    float attenuation = 1.0 / 1.0 + Al * ( pow(distanceToLight, 2));
+
+   //Multiply the Reflectivity by the Diffuse intensity and add ambient
+   return FragColour = Ia + attenuation * ( Id + Is) ;
 
 }
 
-//Set the textures to the Box
+// For textured objects
 subroutine (shaderModelType)
-vec4 BoxMap()
-{
-	return texture(BoxTexture, texCoords);
-}
-
-
-//reflect model,
-subroutine (shaderModelType)
-vec4 Reflect()
+vec4 Objects()
 {
 
-	//reflect
-	vec3 incident = normalize(vertPos - cameraPos);
-	vec3 reflect = reflect (incident, normalize(N));
+return FragColour = vec4(texture(texture_diffuse1, TexCoords));
 
-	return  texture(BoxTexture, reflect);
-}
-
-//Refraction shader
-subroutine (shaderModelType)
-vec4 Refract()
-{
-	vec3 incident = normalize(vertPos - cameraPos);
-	vec3 normal = normalize(N);
-	float ratio = 1.0 /1.5;					//Glass
-	vec3 refract = refract (incident, normal, ratio);
-	return texture(BoxTexture,refract);
 }

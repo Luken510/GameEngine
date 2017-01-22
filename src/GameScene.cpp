@@ -11,12 +11,11 @@ using std::endl;
 
 //using glm::vec3;
 
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform2.hpp>
 
 
-using namespace Game;
+using namespace ecr;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Default constructor
@@ -28,53 +27,78 @@ using namespace Game;
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//Initialise the scene
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::initScene(Camera::QuatCamera &camera)
+	void GameScene::initScene(ecr::QuatCamera &camera)
 	{
 		//|Compile and link the shader  
-		DrawClass.CompileAndLinkShader();
 
-		DrawClass.EnableDepth();
+		compileAndLinkShader();
+
+		gl::Enable(gl::DEPTH_TEST);
 
 		//Set up the lighting
 		setLightParams(camera);
 
 
-		//Create the plane to represent the ground
-		//plane = new VBOPlane(100.0, 100.0, 100, 100);
+		ShadingRobot = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Robot");
+		ShadingObject = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Objects");
 
+		//Create the objects
+		theTest = new Model("../assets/nanosuit/nanosuit.obj");
 
+		//Create the robot
+		theRobot = new Robot;
 
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	//Update not used at present
+	//Update 
 	/////////////////////////////////////////////////////////////////////////////////////////////
+
 	void GameScene::update(float t)
 	{
-
+		theRobot->Update(t);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Set up the lighting variables in the shader
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::setLightParams(Camera::QuatCamera &camera)
+	void GameScene::setLightParams(ecr::QuatCamera &camera)
 	{
 		vec3 WorldLightPos = vec3(10.0f, 10.0f, 10.0f);
-		DrawClass.setLightParams(camera.position(), WorldLightPos, 0.5f, 1.0f, 30.0f);
+
+		myGLSL_prog.setUniform("Ld", 0.9f, 0.5f, 0.3f); // diffuse light intentsity
+		myGLSL_prog.setUniform("La", 0.2f, 0.2f, 0.2f); // ambient light intentsity
+		myGLSL_prog.setUniform("n", 0.9f, 0.5f, 0.3f); // specular exponent
+		myGLSL_prog.setUniform("Al", 0.0001f); // light attenuation		
+		myGLSL_prog.setUniform("LightPosition", WorldLightPos);
+		myGLSL_prog.setUniform(("CameraPos"), camera.position());
+
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// Render the scene
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::render(Camera::QuatCamera &camera)
+	void GameScene::render(ecr::QuatCamera &camera)
 	{
 		//OpenGL Clear ColourBits and Depth bits before rendering scene
-		DrawClass.clearBits();
+	
+		gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
 
-
-		//Now set up the teapot 
+		myGLSL_prog.use();
+		//Now set up the Robot
+		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingRobot);
 		model = mat4(1.0f);
 		setMatrices(camera);
+		myGLSL_prog.setUniform("Kd", 0.0f, 0.0f, 1.0f); // diffuse light
+		myGLSL_prog.setUniform("Ka", 0.0f, 0.0f, 1.0f); // ambient light
+		myGLSL_prog.setUniform("Ks", 0.0f, 0.0f, 1.0f); // specular light
+		theRobot->Render();
+
+		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
+		// Draw the loaded model
+		model = mat4(1.0f);
+		setMatrices(camera);
+		theTest->Render(&myGLSL_prog);
 
 		
 	}
@@ -83,7 +107,7 @@ using namespace Game;
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	//Send the MVP matrices to the GPU
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::setMatrices(Camera::QuatCamera &camera)
+	void GameScene::setMatrices(ecr::QuatCamera &camera)
 	{
 		mat4 mv = (camera.view()) * model;
 
@@ -96,19 +120,41 @@ using namespace Game;
 
 		mat3 mNormal = mat3(vec3(mv[0]), vec3(mv[1]), vec3(mv[2]) );
 
-		DrawClass.setMatricies(mNormal, model, camera.view(), camera.projection());
-
+		myGLSL_prog.setUniform("NormalMatrix", mNormal);
+		myGLSL_prog.setUniform("M", model);
+		myGLSL_prog.setUniform("V", camera.view());
+		myGLSL_prog.setUniform("P", camera.projection());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// resize the viewport
 	/////////////////////////////////////////////////////////////////////////////////////////////
-	void GameScene::resize(Camera::QuatCamera &camera, int w, int h)
+	void GameScene::resize(ecr::QuatCamera &camera, int w, int h)
 	{
-		DrawClass.setViewPort(0, 0, w, h);
+		gl::Viewport(0, 0, w, h);
 		m_iWidth = w;
 		m_iHeight = h;
 		camera.setAspectRatio((float)w / h);
 
 	}
 
+	void GameScene::compileAndLinkShader()
+	{
+
+		try {
+			myGLSL_prog.compileShader("Shaders/diffuse.vert");
+			myGLSL_prog.compileShader("Shaders/diffuse.frag");
+			myGLSL_prog.link();
+			myGLSL_prog.validate();
+			myGLSL_prog.use();
+		}
+		catch (GLSLProgramException & e) {
+			std::cerr << e.what() << std::endl;
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	void GameScene::animate(bool a, int x)
+	{
+		theRobot->Animated(a, x);
+	}

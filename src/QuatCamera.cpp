@@ -3,7 +3,7 @@
 #include "QuatCamera.h"
 #include "defines.h"
 #include <iostream>
-using namespace Camera;
+using namespace ecr;
 
 
 //World coordinate System Axes
@@ -138,9 +138,9 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 		_orientation = qOutput;
 
 		if (iCurrentCamera == 1)
-			std::cout << ":)";
+			std::cout << "1" << std::endl;
 		else
-			std::cout << "ayyyyy";
+			std::cout << "2" << std::endl;
 
 		updateView();
 

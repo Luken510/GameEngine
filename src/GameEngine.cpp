@@ -3,14 +3,13 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include "gl_core_4_3.hpp"
-#include <GLFW/glfw3.h>
-#include "glutils.h"
+
 #include "scene.h"
 #include <string>
 using namespace std;
 
 #include "QuatCamera.h"
+#include "timer.h"
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 
@@ -24,12 +23,12 @@ using namespace std;
 GLFWwindow *window;
 
 //The Scene
-SetUp::Scene *scene;
+ecr::Scene *scene;
 
 //The camera
-Camera::QuatCamera camera1;
-Camera::QuatCamera camera2;
-Camera::QuatCamera *CameraController = &camera1;
+ecr::QuatCamera camera1;
+ecr::QuatCamera camera2;
+ecr::QuatCamera *CameraController = &camera1;
 
 //To keep track of cursor location
 double lastCursorPositionX, lastCursorPositionY, cursorPositionX, cursorPositionY;
@@ -40,16 +39,38 @@ double lastCursorPositionX, lastCursorPositionY, cursorPositionX, cursorPosition
 /////////////////////////////////////////////////////////////////////////////////////////////
 static void key_callback(GLFWwindow* window, int key, int cancode, int action, int mods)
 {
-	if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE)
-		if (scene)
-			scene->animate(!(scene->animating()));
+
 	if (key == 'R' && action == GLFW_RELEASE)
 		CameraController->reset();
 	if (key == GLFW_KEY_1 && action == GLFW_RELEASE)
 		CameraController->toggleCamera(1);
 	if (key == GLFW_KEY_2 && action == GLFW_RELEASE)
 		CameraController->toggleCamera(2);
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////////////////////////////////////////////
+	if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+		scene->animate(TRUE, 0);
+	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+		scene->animate(TRUE, 1);
+	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+		scene->animate(TRUE, 2);
+	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+		scene->animate(TRUE, 3);
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////////////////////////////////////////////
+
+	if (key == GLFW_KEY_UP && action == GLFW_RELEASE)
+		scene->animate(FALSE, 4);
+	if (key == GLFW_KEY_DOWN && action == GLFW_RELEASE)
+		scene->animate(FALSE, 4);
+	if (key == GLFW_KEY_LEFT && action == GLFW_RELEASE)
+		scene->animate(FALSE, 4);
+	if (key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)
+		scene->animate(FALSE, 4);
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 //Callback function when mouse wheel is scrolled
@@ -74,7 +95,7 @@ void initializeGL() {
 
 
 	// Create the scene class and initialise it for the camera
-	scene = new Game::GameScene();
+	scene = new ecr::GameScene();
 
 	if (CameraController->getCurrentCam() == 1)
 	{
@@ -103,10 +124,8 @@ void update(float t)
 	//Using a different way (i.e. instead of callback) to check for LEFT mouse button
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT))
 	{
-		//std::cout << "Left button \n";
+		
 		//Rotate the camera. The 0.001f is a velocity mofifier to make the speed sensible
-
-		//	std::cout <<"deltaX " << deltaX << " deltaY " << deltaY << "\n";
 
 		CameraController->rotate(deltaX*ROTATE_VELOCITY, deltaY*ROTATE_VELOCITY);
 
@@ -115,7 +134,7 @@ void update(float t)
 	//Using a different way (i.e. instead of callback) to check for RIGHT mouse button
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT))
 	{
-		//std::cout << "Right button \n";
+		
 		//Rotate the camera. The 0.01f is a velocity mofifier to make the speed sensible
 		CameraController->pan(deltaX*MOVE_VELOCITY, deltaY*MOVE_VELOCITY);
 
@@ -125,9 +144,12 @@ void update(float t)
 	{
 
 		CameraController->roll(deltaX*ROTATE_VELOCITY);
-
 	}
 
+	scene->update(t);
+
+	
+	
 	//Store the current cursor position
 	lastCursorPositionX = cursorPositionX;
 	lastCursorPositionY = cursorPositionY;
@@ -159,7 +181,7 @@ void mainLoop() {
 /////////////////////////////////////////////////////////////////////////////////////////////
 // resize
 /////////////////////////////////////////////////////////////////////////////////////////////
-void resizeGL(Camera::QuatCamera &camera, int w, int h) {
+void resizeGL(ecr::QuatCamera &camera, int w, int h) {
 	scene->resize(camera, w, h);
 }
 
@@ -170,7 +192,7 @@ void resizeGL(Camera::QuatCamera &camera, int w, int h) {
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-	string name = "Teapot with CubeMap";
+	string name = "Prototype";
 
 	// Initialize GLFW
 	if (!glfwInit()) exit(EXIT_FAILURE);
@@ -184,7 +206,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, TRUE);
 
 	// Open the window
-	string title = "IMAT3111 - " + name;
+	string title = "Engine - " + name;
 	window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, title.c_str(), NULL, NULL);
 	if (!window) {
 		glfwTerminate();

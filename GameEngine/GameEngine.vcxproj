@@ -76,7 +76,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\bin\Debug\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
-    <ExecutablePath>$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
+    <ExecutablePath>$(SolutionDir)..\include\;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
@@ -87,7 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\bin\Release\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
-    <ExecutablePath>$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
+    <ExecutablePath>$(SolutionDir)..\include\;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
@@ -111,13 +111,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include\;$(SolutionDir)\include\;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc110-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\SOIL\;$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;assimp-vc140-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,15 +146,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include\;$(SolutionDir)\include\;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\GLFW\glfw-3.2.1.bin.WIN64\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\SOIL\;$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;assimp-vc140-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,13 +162,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Cube.cpp" />
-    <ClCompile Include="..\src\DrawFramework.cpp" />
     <ClCompile Include="..\src\GameEngine.cpp" />
     <ClCompile Include="..\src\GameScene.cpp" />
     <ClCompile Include="..\src\glslprogram.cpp" />
     <ClCompile Include="..\src\glutils.cpp" />
     <ClCompile Include="..\src\gl_core_4_3.cpp" />
+    <ClCompile Include="..\src\MeshLoader.cpp" />
+    <ClCompile Include="..\src\ModelLoader.cpp" />
     <ClCompile Include="..\src\QuatCamera.cpp" />
+    <ClCompile Include="..\src\Robot.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -177,12 +179,14 @@
   <ItemGroup>
     <ClInclude Include="..\include\cube.h" />
     <ClInclude Include="..\include\defines.h" />
-    <ClInclude Include="..\include\drawframeworks.h" />
     <ClInclude Include="..\include\gamescene.h" />
     <ClInclude Include="..\include\glslprogram.h" />
     <ClInclude Include="..\include\glutils.h" />
     <ClInclude Include="..\include\gl_core_4_3.hpp" />
+    <ClInclude Include="..\include\meshLoader.h" />
+    <ClInclude Include="..\include\modelLoader.h" />
     <ClInclude Include="..\include\QuatCamera.h" />
+    <ClInclude Include="..\include\robot.h" />
     <ClInclude Include="..\include\scene.h" />
     <ClInclude Include="..\include\stdafx.h" />
     <ClInclude Include="..\include\targetver.h" />
@@ -191,6 +195,8 @@
   <ItemGroup>
     <None Include="Shaders\diffuse.frag" />
     <None Include="Shaders\diffuse.vert" />
+    <None Include="Shaders\test.frag" />
+    <None Include="Shaders\test.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

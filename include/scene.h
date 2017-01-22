@@ -3,10 +3,10 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <GLFW/glfw3.h>
+
 #include "QuatCamera.h"
 
-namespace SetUp
+namespace ecr
 {
 
 class Scene
@@ -17,26 +17,26 @@ public:
     /**
       Load textures, initialize shaders, etc.
       */
-    virtual void initScene(Camera::QuatCamera &camera) = 0;
+    virtual void initScene(ecr::QuatCamera &camera) = 0;
 
     /**
       This is called prior to every frame.  Use this
       to update your animation.
       */
-   // virtual void update(GLFWwindow * window, float t ) = 0;
+    virtual void update( float t ) = 0;
 
     /**
       Draw your scene.
       */
-    virtual void render(Camera::QuatCamera &camera) = 0;
+    virtual void render(ecr::QuatCamera &camera) = 0;
 
     /**
       Called when screen is resized
       */
-    virtual void resize(Camera::QuatCamera &camera,int, int) = 0;
+    virtual void resize(ecr::QuatCamera &camera,int, int) = 0;
     
-    void animate( bool value ) { m_animate = value; }
-    bool animating() { return m_animate; }
+	virtual void animate(bool a , int x) = 0;
+
     
 protected:
 	bool m_animate;

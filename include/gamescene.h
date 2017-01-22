@@ -3,13 +3,16 @@
 #define GAMESCENE_H
 
 #include "scene.h"
-#include <glm/glm.hpp>
-#include "drawframeworks.h"
 
-using namespace SetUp;
-using namespace DrawFrame;
+#include "robot.h"
 
-namespace Game
+#include "glslprogram.h"
+
+#include "modelLoader.h"
+
+using namespace egf;
+
+namespace ecr
 {
 	class GameScene : public Scene
 	{
@@ -23,27 +26,33 @@ namespace Game
 		//Table?s
 		//Teapot?
 
-		DrawFrameWork DrawClass;
+		GLSLProgram myGLSL_prog;
 
+		Robot* theRobot;
+		Model* theTest;
+		
+		void compileAndLinkShader();
 
 		glm::mat4 model; // for mvp
 
-		void setMatrices(Camera::QuatCamera &camera); // set the matricies for the camera
-
-		bool m_Toggle;
+		void setMatrices(ecr::QuatCamera &camera); // set the matricies for the camera
+		
+		GLuint ShadingRobot, ShadingObject;
 
 	public:
 		GameScene(); // Constructor
 
-		void setLightParams(Camera::QuatCamera &camera); //Setup the lighting
+		void setLightParams(ecr::QuatCamera &camera); //Setup the lighting
 
-		void initScene(Camera::QuatCamera &camera); //Initialise the scene
+		void initScene(ecr::QuatCamera &camera); //Initialise the scene
 
 		void update(float t); //Update the scene
 
-		void render(Camera::QuatCamera &camera);	//Render the scene
+		void render(ecr::QuatCamera &camera);	//Render the scene
 
-		void resize(Camera::QuatCamera &camera, int, int); //Resize
+		void resize(ecr::QuatCamera &camera, int, int); //Resize
+
+		void animate(bool a, int x);
 
 
 	};

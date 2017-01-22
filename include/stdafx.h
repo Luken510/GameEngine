@@ -13,11 +13,13 @@
 
 
 // TODO: reference additional headers your program requires here
-#include "drawframeworks.h"
+#include <gl_core_4_3.hpp>
+#include <GLFW\glfw3.h>
+#include "glutils.h"
+#include <ostream>
+#include <iostream>
+#include "SOIL\SOIL.h"
 #include "defines.h"
 #include "gamescene.h"
-#include "gl_core_4_3.hpp"
-#include "glslprogram.h"
-#include "glutils.h"
 #include "QuatCamera.h"
 #include "scene.h"

@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include "drawframeworks.h"
 
 
 using namespace DrawFrame;
@@ -10,8 +9,8 @@ using namespace DrawFrame;
 	}
 
 	// to use a basic framework to assign the VBOs instead of the object doing it.
-		void DrawFrameWork::setVBOs(GLfloat fvData[], GLfloat fnData[], GLfloat ftData[],
-		GLuint size, GLuint handle[], GLfloat indicies[], GLuint IndiciesSize)
+		void DrawFrameWork::setVBOs(GLfloat fvData[],
+		GLuint size, GLuint handle[], GLfloat indicies[], GLuint IndiciesSize, GLuint vaoHandle)
 	{
 
 		gl::GenVertexArrays(1, &vaoHandle);
@@ -22,48 +21,51 @@ using namespace DrawFrame;
 		gl::VertexAttribPointer((GLuint)0, 3, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
 		gl::EnableVertexAttribArray(0);  // Vertex position
 
-		gl::BindBuffer(gl::ARRAY_BUFFER, handle[1]);
+		/*gl::BindBuffer(gl::ARRAY_BUFFER, handle[1]);
 		gl::BufferData(gl::ARRAY_BUFFER, size, fnData, gl::STATIC_DRAW);
-		gl::VertexAttribPointer((GLuint)1, 3, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
+		gl::VertexAttribPointer((GLuint)1, 3, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));  if needed surface normals
 		gl::EnableVertexAttribArray(1);  // Vertex normal
 
 		gl::BindBuffer(gl::ARRAY_BUFFER, handle[2]);
 		gl::BufferData(gl::ARRAY_BUFFER, size, ftData, gl::STATIC_DRAW);
-		gl::VertexAttribPointer((GLuint)2, 2, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
-		gl::EnableVertexAttribArray(2);  // texture coords
+		gl::VertexAttribPointer((GLuint)2, 2, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0))); // if needed texture co-ords
+		gl::EnableVertexAttribArray(2);  // texture coords*/
 
 		gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, handle[3]);
 		gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, IndiciesSize, indicies, gl::STATIC_DRAW);
 
 	}
 	// without indicies
-		void DrawFrameWork::setVBOs(GLfloat fvData[], GLfloat fnData[], GLfloat ftData[],
-			GLuint size, GLuint handle[])
+		void DrawFrameWork::setVBOs(GLfloat fvData[], GLfloat fnData[], GLuint size, GLuint vboHandle[], GLuint vaoHandle)
 	{
+
+		
 
 		gl::GenVertexArrays(1, &vaoHandle);
 		gl::BindVertexArray(vaoHandle);
 
-		gl::BindBuffer(gl::ARRAY_BUFFER, handle[0]);
+		gl::GenBuffers(2, vboHandle);
+
+		gl::BindBuffer(gl::ARRAY_BUFFER, vboHandle[0]);
 		gl::BufferData(gl::ARRAY_BUFFER, size, fvData, gl::STATIC_DRAW);
 		gl::VertexAttribPointer((GLuint)0, 3, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
 		gl::EnableVertexAttribArray(0);  // Vertex position
 
-		gl::BindBuffer(gl::ARRAY_BUFFER, handle[1]);
+		gl::BindBuffer(gl::ARRAY_BUFFER, vboHandle[1]);
 		gl::BufferData(gl::ARRAY_BUFFER, size, fnData, gl::STATIC_DRAW);
 		gl::VertexAttribPointer((GLuint)1, 3, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
 		gl::EnableVertexAttribArray(1);  // Vertex normal
 
-		gl::BindBuffer(gl::ARRAY_BUFFER, handle[2]);
+	/*	gl::BindBuffer(gl::ARRAY_BUFFER, handle[2]);
 		gl::BufferData(gl::ARRAY_BUFFER, size, ftData, gl::STATIC_DRAW);
 		gl::VertexAttribPointer((GLuint)2, 2, gl::FLOAT, FALSE, 0, ((GLubyte *)NULL + (0)));
-		gl::EnableVertexAttribArray(2);  // texture coords
+		gl::EnableVertexAttribArray(2);  // texture coords*/
 
 
 	}
 
 
-		void DrawFrameWork::render(GLuint VAO, GLuint DrawCount, bool indicies)
+		void DrawFrameWork::render(GLuint DrawCount, bool indicies, GLuint vaoHandle)
 	{
 
 			gl::Clear(gl::COLOR_BUFFER_BIT);
@@ -78,23 +80,6 @@ using namespace DrawFrame;
 	 void DrawFrameWork::EnableDepth()
 	{
 		gl::Enable(gl::DEPTH_TEST);
-	}
-
-		
-	 void DrawFrameWork::CompileAndLinkShader()
-	{
-
-		try {
-			prog.compileShader("Shaders/diffuse.vert");
-			prog.compileShader("Shaders/diffuse.frag");
-			prog.link();
-			prog.validate();
-			prog.use();
-		}
-		catch (GLSLProgramException & e) {
-			std::cerr << e.what() << std::endl;
-			exit(EXIT_FAILURE);
-		}
 	}
 
 	 void DrawFrameWork::setLightParams(vec3 CamPos, vec3 WorldLight,

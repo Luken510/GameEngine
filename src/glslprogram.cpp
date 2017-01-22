@@ -10,26 +10,29 @@ using std::ios;
 #include <sys/stat.h>
 
 namespace GLSLShaderInfo {
-  struct shader_file_extension {
-    const char *ext;
-    GLSLShader::GLSLShaderType type;
-  };
+	struct shader_file_extension {
+		const char *ext;
+		GLSLShader::GLSLShaderType type;
+	};
 
-  struct shader_file_extension extensions[] = 
-  {
-    {".vs", GLSLShader::VERTEX},
-    {".vert", GLSLShader::VERTEX},
-    {".gs", GLSLShader::GEOMETRY},
-    {".geom", GLSLShader::GEOMETRY},
-    {".tcs", GLSLShader::TESS_CONTROL},
-    {".tes", GLSLShader::TESS_EVALUATION},
-    {".fs", GLSLShader::FRAGMENT},
-    {".frag", GLSLShader::FRAGMENT},
-    {".cs", GLSLShader::COMPUTE}   
-  };
+	struct shader_file_extension extensions[] =
+	{
+	  {".vs", GLSLShader::VERTEX},
+	  {".vert", GLSLShader::VERTEX},
+	  {".gs", GLSLShader::GEOMETRY},
+	  {".geom", GLSLShader::GEOMETRY},
+	  {".tcs", GLSLShader::TESS_CONTROL},
+	  {".tes", GLSLShader::TESS_EVALUATION},
+	  {".fs", GLSLShader::FRAGMENT},
+	  {".frag", GLSLShader::FRAGMENT},
+	  {".cs", GLSLShader::COMPUTE}
+	};
 }
 
+ using namespace egf;
+
 GLSLProgram::GLSLProgram() : handle(0), linked(false) { }
+
 
 GLSLProgram::~GLSLProgram() {
   if(handle == 0) return;
