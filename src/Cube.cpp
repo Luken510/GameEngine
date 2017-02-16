@@ -134,29 +134,48 @@ void Cube::render()
 }
 void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robotpos, bool rotating )
 {
-
-	if (rotating == FALSE)
+	if (rotating == TRUE)
+	{
+		vposition = vec3(0.0f, 0.0f, 0.0f);
+	}
+	else if (rotating == FALSE)
 	{
 		frotateangle = 0;
 	}
-	else if (rotating == TRUE)
+
+	if (frotateangle >= (2 * M_PI))
 	{
-		vposition = vec3(0.0f, 0.0f, 0.0f);
+		frotateangle = (2 * M_PI);
+	}
+
+	if (frotateangle <= -(2 * M_PI))
+	{
+		frotateangle = -(2 * M_PI);
 	}
 
 	mat4 anitmationRotate;
 
-	std::cout << vposition.x << " " << vposition.y << " " << vposition.x << std::endl;
+	//std::cout << vposition.x << " " << vposition.y << " " << vposition.x << std::endl;
 	mat4 TempTranslate = glm::translate(-robotpos);
-	mat4 TempRotate = glm::rotate(glm::radians(frotateangle/10), vec3(0.0f, 1.0f, 0.0f));
-	anitmationRotate = glm::rotate(glm::radians(fnewAngle), vec3(1.0f, 0.0f, 0.0f));
-	mat4 TempTransform = TempRotate * TempTranslate;
-	if (!fnewAngle == 0)
-		mat4 TempTransform = anitmationRotate * TempRotate * TempTranslate;
-	else
-		mat4 TempTransform = TempRotate * TempTranslate;
-	
+	TempRotate = glm::rotate(frotateangle, vec3(0.0f, 1.0f, 0.0f));
+	cout << " this is the weird angle part : " << frotateangle << endl;
 
+		 TempTransform = TempRotate * TempTranslate;
+
+	//anitmationRotate = glm::rotate(fnewAngle, vec3(1.0f, 0.0f, 0.0f));
+	
+	//if (!fnewAngle == 0)
+		//mat4 TempTransform = anitmationRotate * TempRotate * TempTranslate;
+	//else
+		//mat4 TempTransform = TempRotate * TempTranslate;
+	
+		 // SOMEHOW LIMIT THE ROTATION SO IT DOESNT HAPPEN CONSTATLY 
+		 //OVER AND OVER WITHOUT A LIMIT, OR WHY ISNT THE SAME ANGLE AS fROTATE ANGLE, IS THIS DUE TO GLM ROTATE?
+		 //
+		 //
+		 //
+		 //
+		 //
 
 	int y = 108; // number of vertices				   
 				 // to calculate the new translated, scaled cube
@@ -167,7 +186,7 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		m_vPosition[(i)] = tempv.x;
 		m_vPosition[(i + 1)] = tempv.y;
 		m_vPosition[(i + 2)] = tempv.z;
-
+		
 		vec4 tempnorm = vec4(m_vVertexNormal[(i)], m_vVertexNormal[(i + 2)], m_vVertexNormal[(i + 3)], 1.0f);
 		tempnorm = TempTransform * tempnorm;
 		m_vVertexNormal[(i)] = tempnorm.x;
@@ -195,6 +214,7 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		m_vVertexNormal[(i + 1)] = tempnorm2.y;
 		m_vVertexNormal[(i + 2)] = tempnorm2.z;
 	}
+
 
 
 	gl::GenVertexArrays(1, &m_vaoHandle);

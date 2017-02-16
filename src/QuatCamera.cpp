@@ -137,10 +137,11 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 
 		_orientation = qOutput;
 
-		if (iCurrentCamera == 1)
-			std::cout << "1" << std::endl;
-		else
-			std::cout << "2" << std::endl;
+		//if (iCurrentCamera == 1)
+			//std::cout << "1" << std::endl;
+		//else
+			//std::cout << "2" << std::endl;
+
 
 		updateView();
 
@@ -234,7 +235,7 @@ const glm::vec3 WORLDZ = glm::vec3(0,0,1);
 		//Initialise camera perspective parameters
 		_fieldOfView = glm::radians(50.0f);
 		_nearPlane = 0.01f;
-		_farPlane = 100.0f;
+		_farPlane = 1000.0f;
 		_aspectRatio = 4.0f/3.0f;
 
 		_projection = glm::perspective(_fieldOfView,_aspectRatio,_nearPlane,_farPlane);

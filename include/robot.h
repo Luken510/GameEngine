@@ -49,7 +49,7 @@ namespace ecr
 		bool bIsAnimated;
 		bool bIsRotating;
 
-
+		int tick = 0;
 	public:
 		Robot();
 		~Robot();
@@ -57,6 +57,7 @@ namespace ecr
 		void DrawRobot();
 		void Update(float dt);
 		void Render();
+		vec3 getPos();
 
 		void Animated(bool a, int x);
 

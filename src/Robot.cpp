@@ -12,7 +12,7 @@ Robot::Robot()
 	m_Orientation = glm::vec3(0, 0, 0);
 	vec3 newPosition;
 	vec3 oldposition = m_Position;
-	fRotationAngle = 180.0f;
+	fRotationAngle = glm::radians(180.0f);
 	animationspeed = 0.2f;
 	bIsAnimated = FALSE;
 	bIsRotating = FALSE;
@@ -57,6 +57,11 @@ void Robot::Render()
 
 }
 
+vec3 ecr::Robot::getPos()
+{
+	return m_Position;
+}
+
 void Robot::Update(float dt)
 {
 	if (bIsAnimated == TRUE)
@@ -68,27 +73,28 @@ void Robot::Update(float dt)
 
 		if (fDirection == MOVELEFT)
 		{
-			bIsRotating = TRUE;
-			fRotationAngle += glm::radians(30.0f);
+			
+			fRotationAngle += glm::radians(0.3f);
 
-			if (fRotationAngle > (2 * M_PI))
+			if (fRotationAngle >= (2 * M_PI))
 			{
 				fRotationAngle = (2 * M_PI);
 			}
 			
-		
+			bIsRotating = TRUE;
 		}
 		else if (fDirection == MOVERIGHT)
 		{
-			bIsRotating = TRUE;
+			 
 
-			fRotationAngle -= glm::radians(30.0f);
+			fRotationAngle -= glm::radians(0.3f);
 
-			if (fRotationAngle < -(2 * M_PI))
+			if (fRotationAngle <= -(2 * M_PI))
 			{
 				fRotationAngle = -(2* M_PI);
 			}
 			
+			bIsRotating = TRUE;
 		}
 
 		 oldposition = m_Position;
@@ -96,15 +102,15 @@ void Robot::Update(float dt)
 		switch (fDirection)
 		{
 		case MOVEFOWARD:
-			bIsRotating = FALSE;
-			m_Position.x -= sin(( fRotationAngle)/10);
-			m_Position.z -= cos((fRotationAngle)/10);
+			m_Position.x -= sin(fRotationAngle);
+			m_Position.z -= cos(fRotationAngle);
+			bIsRotating = FALSE;			
 			 newPosition = m_Position - oldposition;
 			break;
 		case MOVEBACKWARD:
-			bIsRotating = FALSE;
-			m_Position.x += sin(( fRotationAngle) /10);
-			m_Position.z += cos((  fRotationAngle) /10);
+			m_Position.x += sin(fRotationAngle);
+			m_Position.z += cos(fRotationAngle);
+			bIsRotating = FALSE;		
 			newPosition = m_Position - oldposition;
 			break;
 		default:
@@ -144,6 +150,9 @@ void Robot::Update(float dt)
 			
 			float fRotatingDiff = fOldRotating - fRotationAngle;
 
+			tick++;
+			cout << " robot Tick :" << tick << endl;
+
 			Head->update(newPosition, fRotationAngle, 0.0f, oldposition, bIsRotating);
 			torso->update(newPosition, fRotationAngle, 0.0f, oldposition, bIsRotating);
 
@@ -152,7 +161,7 @@ void Robot::Update(float dt)
 			leg_left->update(newPosition, fRotationAngle, legAngles[LEFT], oldposition, bIsRotating);
 			leg_right->update(newPosition, fRotationAngle, legAngles[RIGHT], oldposition, bIsRotating);
 
-		
+			cout << fRotationAngle << endl;
 	}
 }
 
@@ -175,6 +184,8 @@ void Robot::Animated(bool a, int x)
 	case 3: // this is right
 		fDirection = MOVERIGHT;
 		break;
+	case 4:
+		bIsRotating = FALSE;
 
 	default:
 		break;

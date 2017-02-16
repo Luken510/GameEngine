@@ -175,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\theFloor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cube.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="..\include\scene.h" />
     <ClInclude Include="..\include\stdafx.h" />
     <ClInclude Include="..\include\targetver.h" />
+    <ClInclude Include="..\include\theFloor.h" />
     <ClInclude Include="EngineFrameWork.h" />
     <ClInclude Include="inputs.h" />
     <ClInclude Include="resource.h" />

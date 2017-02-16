@@ -46,7 +46,7 @@ void Mesh::Render(GLSLProgram* shader)
 	GLuint iDiffuseNr = 1;
 	GLuint iSpecularNr = 1;
 	
-	cout << this->mv_Textures.size() << endl;
+	//cout << this->mv_Textures.size() << endl;
 
 	for (GLuint i = 0; i < (this->mv_Textures.size()); i++)
 	{
@@ -56,8 +56,8 @@ void Mesh::Render(GLSLProgram* shader)
 
 		string sName = this->mv_Textures[i].sType;
 		string sNumber = (sName == "texture_diffuse") ? std::to_string(iDiffuseNr++) : std::to_string(iSpecularNr);
-		std::cout << "sName" << std::endl;
-		std::cout << "sNumber" << std::endl;
+		//std::cout << "sName" << std::endl;
+		//std::cout << "sNumber" << std::endl;
 
 
 		gl::Uniform1f(gl::GetUniformLocation(shader->getHandle(), ("material." + sName + sNumber).c_str()), i); // now finds the correct location in the shader using the above gluint to string function

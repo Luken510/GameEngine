@@ -3,11 +3,9 @@
 #define GAMESCENE_H
 
 #include "scene.h"
-
 #include "robot.h"
-
+#include "theFloor.h"
 #include "glslprogram.h"
-
 #include "modelLoader.h"
 
 using namespace egf;
@@ -28,9 +26,10 @@ namespace ecr
 
 		GLSLProgram myGLSL_prog;
 
-		Robot* theRobot;
+		Floor* theFloor;
+		
 		Model* theSpookyGuy;
-		Model* theHouse;
+		//Model* theHouse;
 		
 		void compileAndLinkShader();
 
@@ -41,6 +40,8 @@ namespace ecr
 		GLuint ShadingRobot, ShadingObject;
 
 	public:
+		Robot* theRobot;
+
 		GameScene(); // Constructor
 
 		void setLightParams(ecr::QuatCamera &camera); //Setup the lighting

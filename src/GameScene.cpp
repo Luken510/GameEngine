@@ -42,7 +42,8 @@ using namespace ecr;
 		ShadingRobot = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Robot");
 		ShadingObject = gl::GetSubroutineIndex(myGLSL_prog.getHandle(), gl::FRAGMENT_SHADER, "Objects");
 
-		theHouse = new Model("../assets/house/house.FBX");
+		//theHouse = new House();
+		theFloor = new Floor();
 
 		//Create the objects
 		theSpookyGuy = new Model("../assets/nanosuit/nanosuit.obj");
@@ -98,17 +99,27 @@ using namespace ecr;
 		myGLSL_prog.setUniform("Ks", 0.0f, 0.0f, 1.0f); // specular light
 		theRobot->Render();
 
+
+		//set up the floor
+		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingRobot);
+		model = mat4(1.0f);
+		setMatrices(camera);
+		myGLSL_prog.setUniform("Kd", 0.0f, 1.0f, 0.0f); // diffuse light
+		myGLSL_prog.setUniform("Ka", 0.0f, 1.0f, 0.0f); // ambient light
+		myGLSL_prog.setUniform("Ks", 0.0f, 1.0f, 0.0f); // specular light
+		theFloor->Render();
+
 		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
 		// Draw the loaded model
 		model = mat4(1.0f) * glm::translate(vec3(5.0f, -5.0f, 5.0f));
 		setMatrices(camera);
 		theSpookyGuy->Render(&myGLSL_prog);
 
-		gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
-		// Draw the loaded model
-		model = mat4(1.0f) * glm::translate(vec3(50.0f,-5.0f,50.0f)) * glm::scale (vec3(0.8f,0.8f,0.8f));
-		setMatrices(camera);
-		theHouse->Render(&myGLSL_prog);
+		//gl::UniformSubroutinesuiv(gl::FRAGMENT_SHADER, 1, &ShadingObject);
+		 //Draw the loaded model
+		//model = mat4(1.0f) * glm::translate(vec3(50.0f,-5.0f,50.0f)) * glm::scale (vec3(0.8f,0.8f,0.8f));
+		//setMatrices(camera);
+		//theHouse->Render(&myGLSL_prog);
 
 		
 		

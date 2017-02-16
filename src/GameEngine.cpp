@@ -23,7 +23,7 @@ using namespace std;
 GLFWwindow *window;
 
 //The Scene
-ecr::Scene *scene;
+ecr::GameScene *scene;
 
 //The camera
 ecr::QuatCamera camera1;
@@ -43,9 +43,9 @@ static void key_callback(GLFWwindow* window, int key, int cancode, int action, i
 	if (key == 'R' && action == GLFW_RELEASE)
 		CameraController->reset();
 	if (key == GLFW_KEY_1 && action == GLFW_RELEASE)
-		CameraController->toggleCamera(1);
+		CameraController = &camera1;
 	if (key == GLFW_KEY_2 && action == GLFW_RELEASE)
-		CameraController->toggleCamera(2);
+		CameraController = &camera2;
 	/////////////////////////////////////////////////////////////////////////////////////////
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -167,6 +167,9 @@ void mainLoop() {
 
 		scene->render(*CameraController);
 
+		//vec3 RobotPos = scene->theRobot->getPos();
+
+		
 		//is running;
 		//GUI->update
 		//Render->draw
@@ -236,6 +239,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Initialization
 	initializeGL();
+
+	camera2.setPosition(vec3(20, 5, 50));
+	camera2.setFieldOfView(glm::radians(180.0f));
+
 
 	resizeGL(*CameraController, WIN_WIDTH, WIN_HEIGHT);
 

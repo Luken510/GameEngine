@@ -78,11 +78,14 @@
     <ClCompile Include="..\src\glslprogram.cpp">
       <Filter>Source Files\Framework\Draw Framework</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ModelLoader.cpp">
+      <Filter>Source Files\Framework\Draw Framework</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\MeshLoader.cpp">
       <Filter>Source Files\Framework\Draw Framework</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ModelLoader.cpp">
-      <Filter>Source Files\Framework\Draw Framework</Filter>
+    <ClCompile Include="..\src\theFloor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="..\include\mainLoop.h">
       <Filter>Header Files\Framework\Engine Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\theFloor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

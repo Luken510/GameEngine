@@ -11,8 +11,10 @@ namespace ecr
 	{
 
 	private:
-
-
+		int tick = 0;
+		float fOldAngle = 0;
+		mat4 TempRotate;
+		mat4 TempTransform;
 		GLuint m_vaoHandle;
 		GLuint m_vboHandle[3];
 
