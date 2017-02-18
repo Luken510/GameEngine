@@ -153,7 +153,6 @@ vector<Texture> Model::tLoadMaterialTextures(aiMaterial* mat, aiTextureType type
 GLint TextureFromFile(const char* path, string directory)
 {
 
-	std::cout << path << std::endl;
 	//generate texture ID and load Texture data
 	string filename = string(path);
 
@@ -164,7 +163,6 @@ GLint TextureFromFile(const char* path, string directory)
 	int width, height;
 
 	unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
-	std::cout << image << std::endl;
 	//Assign Texture to the ID
 
 	gl::BindTexture(gl::TEXTURE_2D, tTextureID);

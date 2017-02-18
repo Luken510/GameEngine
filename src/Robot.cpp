@@ -74,12 +74,8 @@ void Robot::Update(float dt)
 		if (fDirection == MOVELEFT)
 		{
 			
-			fRotationAngle += glm::radians(0.3f);
+			fRotationAngle += glm::radians(0.5f);
 
-			if (fRotationAngle >= (2 * M_PI))
-			{
-				fRotationAngle = (2 * M_PI);
-			}
 			
 			bIsRotating = TRUE;
 		}
@@ -87,12 +83,8 @@ void Robot::Update(float dt)
 		{
 			 
 
-			fRotationAngle -= glm::radians(0.3f);
+			fRotationAngle -= glm::radians(0.5f);
 
-			if (fRotationAngle <= -(2 * M_PI))
-			{
-				fRotationAngle = -(2* M_PI);
-			}
 			
 			bIsRotating = TRUE;
 		}
@@ -148,20 +140,17 @@ void Robot::Update(float dt)
 			}
 
 			
-			float fRotatingDiff = fOldRotating - fRotationAngle;
+			float fRotatingDiff = fRotationAngle -  fOldRotating;
 
-			tick++;
-			cout << " robot Tick :" << tick << endl;
 
-			Head->update(newPosition, fRotationAngle, 0.0f, oldposition, bIsRotating);
-			torso->update(newPosition, fRotationAngle, 0.0f, oldposition, bIsRotating);
+			Head->update(newPosition, fRotatingDiff, 0.0f, oldposition, bIsRotating);
+			torso->update(newPosition, fRotatingDiff, 0.0f, oldposition, bIsRotating);
 
-			arm_left->update(newPosition, fRotationAngle, armAngles[LEFT], oldposition, bIsRotating);
-			arm_right->update(newPosition, fRotationAngle, armAngles[RIGHT], oldposition, bIsRotating);
-			leg_left->update(newPosition, fRotationAngle, legAngles[LEFT], oldposition, bIsRotating);
-			leg_right->update(newPosition, fRotationAngle, legAngles[RIGHT], oldposition, bIsRotating);
+			arm_left->update(newPosition, fRotatingDiff, armAngles[LEFT], oldposition, bIsRotating);
+			arm_right->update(newPosition, fRotatingDiff, armAngles[RIGHT], oldposition, bIsRotating);
+			leg_left->update(newPosition, fRotatingDiff, legAngles[LEFT], oldposition, bIsRotating);
+			leg_right->update(newPosition, fRotatingDiff, legAngles[RIGHT], oldposition, bIsRotating);
 
-			cout << fRotationAngle << endl;
 	}
 }
 

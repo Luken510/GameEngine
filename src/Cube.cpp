@@ -143,22 +143,12 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		frotateangle = 0;
 	}
 
-	if (frotateangle >= (2 * M_PI))
-	{
-		frotateangle = (2 * M_PI);
-	}
-
-	if (frotateangle <= -(2 * M_PI))
-	{
-		frotateangle = -(2 * M_PI);
-	}
 
 	mat4 anitmationRotate;
 
 	//std::cout << vposition.x << " " << vposition.y << " " << vposition.x << std::endl;
 	mat4 TempTranslate = glm::translate(-robotpos);
 	TempRotate = glm::rotate(frotateangle, vec3(0.0f, 1.0f, 0.0f));
-	cout << " this is the weird angle part : " << frotateangle << endl;
 
 		 TempTransform = TempRotate * TempTranslate;
 
@@ -168,14 +158,6 @@ void Cube::update(vec3 vposition, float frotateangle, float fnewAngle, vec3 robo
 		//mat4 TempTransform = anitmationRotate * TempRotate * TempTranslate;
 	//else
 		//mat4 TempTransform = TempRotate * TempTranslate;
-	
-		 // SOMEHOW LIMIT THE ROTATION SO IT DOESNT HAPPEN CONSTATLY 
-		 //OVER AND OVER WITHOUT A LIMIT, OR WHY ISNT THE SAME ANGLE AS fROTATE ANGLE, IS THIS DUE TO GLM ROTATE?
-		 //
-		 //
-		 //
-		 //
-		 //
 
 	int y = 108; // number of vertices				   
 				 // to calculate the new translated, scaled cube
