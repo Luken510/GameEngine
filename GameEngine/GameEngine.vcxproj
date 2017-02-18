@@ -76,7 +76,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\bin\Debug\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
-    <ExecutablePath>$(SolutionDir)..\include\;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
+    <ExecutablePath>$(SolutionDir)\external\include\;$(SolutionDir)\external\include\opengl\glm\;$(SolutionDir)\external\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\external\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
@@ -87,7 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(Platform)\bin\Release\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\temp\$(Configuration)\</IntDir>
-    <ExecutablePath>$(SolutionDir)..\include\;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
+    <ExecutablePath>$(SolutionDir)\external\include\;$(SolutionDir)\external\include\opengl\glm\;$(SolutionDir)\external\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include;$(SolutionDir)\external\include\opengl\stb_image\stb_image;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(SolutionDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <SourcePath>$(SolutionDir)\src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
@@ -111,12 +111,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include\;$(SolutionDir)\include\;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\include\;$(SolutionDir)\include\;$(SolutionDir)\external\include\opengl\stb_image\stb_image;$(SolutionDir)\external\include\opengl\glm\;$(SolutionDir)\external\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\;$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\external\lib\;$(SolutionDir)\external\lib\assimp\;$(SolutionDir)\external\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>soil2-debug.lib;assimp-vc140-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -146,14 +146,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include\;$(SolutionDir)\include\;$(SolutionDir)..\include\opengl\stb_image\stb_image;$(SolutionDir)..\include\opengl\glm\;$(SolutionDir)..\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\include\;$(SolutionDir)\include\;$(SolutionDir)\external\include\opengl\stb_image\stb_image;$(SolutionDir)\external\include\opengl\glm\;$(SolutionDir)\external\include\opengl\GLFW\glfw-3.2.1.bin.WIN64\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\;$(SolutionDir)..\lib\assimp\;$(SolutionDir)..\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\external\lib\;$(SolutionDir)\external\lib\assimp\;$(SolutionDir)\external\lib\GLFW\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>soil2-debug.lib;assimp-vc140-mt.lib;opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
