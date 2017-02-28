@@ -94,14 +94,14 @@ void Robot::Update(float dt)
 		switch (fDirection)
 		{
 		case MOVEFOWARD:
-			m_Position.x -= sin(fRotationAngle);
-			m_Position.z -= cos(fRotationAngle);
+			m_Position.x -= sin(fRotationAngle) / 10;
+			m_Position.z -= cos(fRotationAngle) / 10;
 			bIsRotating = FALSE;			
 			 newPosition = m_Position - oldposition;
 			break;
 		case MOVEBACKWARD:
-			m_Position.x += sin(fRotationAngle);
-			m_Position.z += cos(fRotationAngle);
+			m_Position.x += sin(fRotationAngle) / 10;
+			m_Position.z += cos(fRotationAngle) / 10;
 			bIsRotating = FALSE;		
 			newPosition = m_Position - oldposition;
 			break;

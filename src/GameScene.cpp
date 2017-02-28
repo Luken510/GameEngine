@@ -49,7 +49,6 @@ using namespace ecr;
 		theSpookyGuy = new Model("../assets/nanosuit/nanosuit.obj");
 
 
-
 		//Create the robot
 		theRobot = new Robot;
 
@@ -69,10 +68,10 @@ using namespace ecr;
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	void GameScene::setLightParams(ecr::QuatCamera &camera)
 	{
-		vec3 WorldLightPos = vec3(10.0f, 10.0f, 10.0f);
+		vec3 WorldLightPos = vec3(0.0f, 10.0f, 0.0f);
 
 		myGLSL_prog.setUniform("Ld", 0.9f, 0.5f, 0.3f); // diffuse light intentsity
-		myGLSL_prog.setUniform("La", 0.2f, 0.2f, 0.2f); // ambient light intentsity
+		myGLSL_prog.setUniform("La", 0.3f, 0.3f, 0.3f); // ambient light intentsity
 		myGLSL_prog.setUniform("n", 0.9f, 0.5f, 0.3f); // specular exponent
 		myGLSL_prog.setUniform("Al", 0.0001f); // light attenuation		
 		myGLSL_prog.setUniform("LightPosition", WorldLightPos);
